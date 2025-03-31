@@ -3,6 +3,9 @@ import facer
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import json
+import timm.layers
+import mediapipe as mp
 
 '''
 @inproceedings{zheng2022farl,
@@ -28,7 +31,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 # Read image
 
-image_path = ''  # Update with your image (ideally jpg)
+image_path = 'haerin.jpg'  # Update with your image (ideally jpg)
 image = facer.hwc2bchw(facer.read_hwc(image_path)).to(device=device)  # Convert to tensor
 
 # Load face detector (RetinaFace)
@@ -68,16 +71,14 @@ def show_segmentation(mask, title="Segmentation Mask"):
     plt.show()
 
 # Show the segmentation mask
-show_segmentation(seg_mask)
+# show_segmentation(seg_mask)
 
 # Creating a mapping of the features 
 
 features = {
     "skin": 1,
-    "left eyebrow": 2,
-    "right eyebrow": 3,
-    "left eye": 4,
-    "right eye": 5,
+    "eyebrows": [2, 3],
+    "eyes": [4, 5],
     "nose": 6,
     "upper lip": 7,
     "lower lip": 8,
@@ -88,10 +89,24 @@ features = {
 
 # filter by mapping
 skin_mask = (seg_mask == features["skin"])
-eyebrow_mask = (seg_mask == features["eyebrow"])
+eye_mask = np.isin(seg_mask,features["eyes"])
+hair_mask = (seg_mask == features["hair"])
 
-# compute hsvs of each
+# compute hsvs of each (these are numpy arrays)
 
 skin_hsv = compute_hsv(skin_mask, hsv_image)
-eyebrow_hsv = compute_hsv(eyebrow_mask, hsv_image)
+eye_hsv = compute_hsv(eye_mask, hsv_image)
+hair_hsv = compute_hsv(hair_mask, hsv_image)
+
+data = {
+    "skin": skin_hsv.tolist(),
+    "eyes": eye_hsv.tolist(),
+    "hair": hair_hsv.tolist()
+}
+
+with open("hsv_data.json", "w") as json_file:
+    json.dump(data, json_file, indent=4)
+
+
+
 
