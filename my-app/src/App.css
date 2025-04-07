@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  background-color: #c3d7ff; /* light blue, for example */
+}
+
+
+.header {
+  color: #4b0082; /* Indigo example */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 2rem;
+}

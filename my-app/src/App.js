@@ -1,24 +1,28 @@
-import logo from './logo.svg';
+import {useState} from 'react';
 import './App.css';
 
+console.log("App component loaded");
+
 function App() {
+const [display, setDisplay] = useState(0);
+function addNum(){
+  setDisplay(display+1);
+}  
+function subNum(){
+  setDisplay(display-1);
+}
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className = 'app'>
+      <div className = 'add'>
+        <button onClick = {addNum}>+</button>
+      </div>
+      <h1 className = 'header'>DataDrip!</h1>
+
+      <div className = 'subtract'>
+        <button onClick = {subNum}>-</button>
+      </div>
     </div>
+
   );
 }
 
