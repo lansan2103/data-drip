@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import json
 import timm.layers
 import mediapipe as mp
+import matplotlib.pyplot as plt
+
 
 '''
 @inproceedings{zheng2022farl,
@@ -115,38 +117,49 @@ def get_season(h, s, v):
     # s = Saturation in % (0 - 100)
     # v = Value/Brightness in % (0 - 100)
 
-    if h >= 20 and h <= 40 and s > 40 and v > 70:
+    if 20 <= h <= 40 and s > 40 and v > 70:
         return "Spring"
-    elif h >= 10 and h <= 30 and s < 40 and v > 60:
+    elif 10 <= h <= 30 and s < 40 and v > 60:
         return "Summer"
-    elif h >= 30 and h <= 50 and s > 30 and v < 70:
+    elif 30 <= h <= 50 and s > 30 and v < 70:
         return "Autumn"
-    elif h >= 10 and h <= 25 and s > 50 and v < 50:
+    elif 10 <= h <= 25 and s > 50 and v < 50:
         return "Winter"
     else:
         return "Neutral / Depends — Try Soft Tones"
 
 def get_palette(season):
     palettes = {
-        "Spring": ["#FFD8A9", "#FFCBA4", "#F9C66E", "#FF9999"],
-        "Summer": ["#D3E0EA", "#C3B1E1", "#AEC6CF", "#F4DADA"],
-        "Autumn": ["#A0522D", "#C19A6B", "#8B4000", "#D2691E"],
-        "Winter": ["#003366", "#660066", "#990000", "#004953"],
-        "Neutral / Depends — Try Soft Tones": ["#CFCFCF", "#B0A999", "#D9C9B9", "#AFAFAF"]
+        "Spring": ["#FFA07A", "#FFD700", "#98FB98", "#FFB6C1"],  # Coral, Yellow, Mint, Pink
+        "Summer": ["#C8A2C8", "#F4A7B9", "#87CEEB", "#D3D3D3"],  # Lavender, Dusty Rose, Sky Blue, Light Grey
+        "Autumn": ["#556B2F", "#D2691E", "#FF8C00", "#8B4513"],  # Olive, Rust, Mustard, Brown
+        "Winter": ["#800020", "#003366", "#228B22", "#2F4F4F"],  # Burgundy, Navy, Emerald, Charcoal
+        "Neutral / Depends — Try Soft Tones": ["#000000", "#FFFFFF", "#4B4B4B", "#D3D3D3"]
     }
     return palettes.get(season)
 
-# Example Usage
-# Example Skin HSV input
-h = 30   # Hue in degrees
-s = 35   # Saturation in %
-v = 85   # Value/Brightness in %
+h, s, v = skin_hsv
 
 season = get_season(h, s, v)
 palette = get_palette(season)
 
 print(f"Detected Season: {season}")
 print(f"Recommended Color Palette: {palette}")
+
+def display_palette(palette, season):
+    n = len(palette)
+    fig, ax = plt.subplots(figsize=(n * 2, 2))
+
+    for i, color in enumerate(palette):
+        ax.add_patch(plt.Rectangle((i, 0), 1, 1, color=color))
+
+    ax.set_xlim(0, n)
+    ax.set_ylim(0, 1)
+    ax.axis('off')
+    plt.title(f'{season} Palette', fontsize=16)
+    plt.show()
+
+display_palette(palette, season)
 
 
 

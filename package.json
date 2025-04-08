@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/bigboisw/data-drip#readme",
   "dependencies": {
-    "react-scripts": "^5.0.1"
+    "facer": "^0.0.1",
+    "react-scripts": "^5.0.1",
+    "torch": "^0.2.7"
   }
 }
