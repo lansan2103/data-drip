@@ -134,7 +134,7 @@ def get_palette(season):
         "Summer": ["#C8A2C8", "#F4A7B9", "#87CEEB", "#D3D3D3"],  # Lavender, Dusty Rose, Sky Blue, Light Grey
         "Autumn": ["#556B2F", "#D2691E", "#FF8C00", "#8B4513"],  # Olive, Rust, Mustard, Brown
         "Winter": ["#800020", "#003366", "#228B22", "#2F4F4F"],  # Burgundy, Navy, Emerald, Charcoal
-        "Neutral / Depends — Try Soft Tones": ["#000000", "#FFFFFF", "#4B4B4B", "#D3D3D3"]
+        "Neutral": ["#000000", "#FFFFFF", "#4B4B4B", "#D3D3D3"]
     }
     return palettes.get(season)
 
