@@ -55,7 +55,7 @@ seg_logits = faces['seg']['logits']
 seg_probs = seg_logits.softmax(dim=1)  # n_faces x n_classes x h x w
 
 # Get segmentation mask (argmax gives class index per pixel)
-seg_mask = seg_probs.argmax(dim=1).squeeze().cpu().numpy()  # Convert to numpy array
+seg_mask = seg_probs.argmax(dim=1)[0].cpu().numpy()
 
 # Load original image in OpenCV for HSV conversion
 cv_image = cv2.imread(image_path)  # OpenCV loads images as BGR
