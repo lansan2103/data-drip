@@ -38,7 +38,7 @@
 }
 
 body {
-  background-color: #c3d7ff; /* light blue, for example */
+  background-color: #ffffff; /* light blue, for example */
 }
 
 
@@ -51,8 +51,13 @@ body {
 }
 
 .subheader{
-  color: #de26e5;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #c25d5d;
+  .playwrite-mx-guides-regular {
+    font-family: "Playwrite MX Guides", cursive;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
   font-size: 1rem;
   text-align: center;
   margin-top: 2rem;

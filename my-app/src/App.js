@@ -104,6 +104,8 @@
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import './App.css';
+import Header from './Header';
+
 
 function Accept() {
   const {
@@ -140,7 +142,6 @@ function Accept() {
       <div {...getRootProps({ className: 'dropzone' })}>
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
-        <em>(Only *.jpeg images will be accepted)</em>
       </div>
       <aside>
         <h4>Accepted files</h4>
@@ -155,24 +156,25 @@ function Accept() {
 function App() {
   const [display, setDisplay] = useState(0);
 
-  const addNum = () => setDisplay(display + 1);
-  const subNum = () => setDisplay(display - 1);
-
   return (
     <div className="app">
-      <div className="add">
-        <button onClick={addNum}>+</button>
-        <button onClick={subNum}>-</button>
-        <p>{display}</p>
-      </div>
-      <h1 className="header">DataDrip!</h1>
-      <h2 className="subheader">Please insert a .jpeg photo of your face in natural lighting from shoulders up</h2>
+      <Header>DataDrip</Header>
+
+      <h1 className="header">no</h1>
+      <h2 className="subheader">Please insert a photo of your face in natural lighting from shoulders up</h2>
       <input type="file" />
       <button>Upload</button>
 
       <Accept />
+
+      
     </div>
+
+
+    
   );
 }
+
+
 
 export default App;
