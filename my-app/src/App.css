@@ -51,7 +51,7 @@ body {
 }
 
 .subheader{
-  color: #c25d5d;
+  color: #4e4ed6;
   .playwrite-mx-guides-regular {
     font-family: "Playwrite MX Guides", cursive;
     font-weight: 400;
@@ -64,9 +64,22 @@ body {
 }
 
 .section{
-  color: #de26e5;
+  color: #d462d7;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.introduction{
+  color: #286cec;
+  .playwrite-mx-guides-regular {
+    font-family: "Playwrite MX Guides", cursive;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  font-size: 1.5rem;
   text-align: center;
   margin-top: 2rem;
 }
