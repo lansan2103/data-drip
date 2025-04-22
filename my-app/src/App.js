@@ -55,48 +55,26 @@ function App() {
   return (
     <div className="app">
 
-      <h1 className="header">no</h1>
+      <h1>DataDrip Test</h1>
+      <hr />
+      <br/>
       <h2 className="subheader">Please insert a photo of your face in natural lighting from shoulders up</h2>
+      <br/>
       <input type="file" />
+      
       <button>Upload</button>
-
+      
       <Accept />
       <hr />
 
-      <hello>hello</hello>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <h1 className="introduction">This is an AI-powered fashion assistant that helps you create the perfect outfit for any occasion! </h1>
+    
+      {/* <h1 className="introduction">This is an AI-powered fashion assistant that helps you create the perfect outfit for any occasion! </h1>
       <h1 className="introduction">Simply upload an image of a clothing item, and the program will analyze its style, color, and fit, then recommend complementary pieces from your wardrobe or suggest new ones to complete your look. </h1>
       <h1 className="introduction">Whether you're dressing for a formal event, a casual day out, or a business meeting, the app provides outfit suggestions tailored to the occasion.</h1>
-      <h1 className="introduction">With real-time feedback on how well your outfit matches the event, you'll always step out in style with confidence!</h1>
-      
-      
-
+      <h1 className="introduction">With real-time feedback on how well your outfit matches the event, you'll always step out in style with confidence!</h1> */}
       
       
       
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
-      <p>hello</p>
 
       
     </div>

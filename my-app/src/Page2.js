@@ -4,7 +4,7 @@ import React from "react";
 
         return (
           <div>
-            <p>Second page!</p>
+            <h1>About DataDrip!</h1>
           </div>
         );
 

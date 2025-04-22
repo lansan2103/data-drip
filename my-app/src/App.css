@@ -73,6 +73,8 @@ body {
 
 .introduction{
   color: #286cec;
+  width: 50%;
+  margin: 0 auto;
   .playwrite-mx-guides-regular {
     font-family: "Playwrite MX Guides", cursive;
     font-weight: 300;
