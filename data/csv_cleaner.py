@@ -86,26 +86,28 @@ for i, p in enumerate(array):
         separations.append(i)
 # print(separations)
 
-type = []
-for i, r in df.iterrows():
-    if array.index(r['mainCatCode']) >= 0 and array.index(r['mainCatCode']) < separations[0]:
-        type.append('mensTop')
-    elif array.index(r['mainCatCode']) >= separations[0] and array.index(r['mainCatCode']) < separations[1]:
-        type.append('mensBottom')
-    elif array.index(r['mainCatCode']) >= separations[1] and array.index(r['mainCatCode']) < separations[2]:
-        type.append('mensShoes')
-    elif array.index(r['mainCatCode']) >= separations[2] and array.index(r['mainCatCode']) < separations[3]:
-        type.append('mensOther')
-    elif array.index(r['mainCatCode']) >= separations[3] and array.index(r['mainCatCode']) < separations[4]:
-        type.append('womensTop')
-    elif array.index(r['mainCatCode']) >= separations[4] and array.index(r['mainCatCode']) < separations[5]:
-        type.append('womensBottom')
-    elif array.index(r['mainCatCode']) >= separations[5] and array.index(r['mainCatCode']) < separations[6]:
-        type.append('womensShoes')
-    elif array.index(r['mainCatCode']) >= separations[6]:
-        type.append('womensOther')
+---
 
-df['type'] = type
+# type = []
+# for i, r in df.iterrows():
+#     if array.index(r['mainCatCode']) >= 0 and array.index(r['mainCatCode']) < separations[0]:
+#         type.append('mensTop')
+#     elif array.index(r['mainCatCode']) >= separations[0] and array.index(r['mainCatCode']) < separations[1]:
+#         type.append('mensBottom')
+#     elif array.index(r['mainCatCode']) >= separations[1] and array.index(r['mainCatCode']) < separations[2]:
+#         type.append('mensShoes')
+#     elif array.index(r['mainCatCode']) >= separations[2] and array.index(r['mainCatCode']) < separations[3]:
+#         type.append('mensOther')
+#     elif array.index(r['mainCatCode']) >= separations[3] and array.index(r['mainCatCode']) < separations[4]:
+#         type.append('womensTop')
+#     elif array.index(r['mainCatCode']) >= separations[4] and array.index(r['mainCatCode']) < separations[5]:
+#         type.append('womensBottom')
+#     elif array.index(r['mainCatCode']) >= separations[5] and array.index(r['mainCatCode']) < separations[6]:
+#         type.append('womensShoes')
+#     elif array.index(r['mainCatCode']) >= separations[6]:
+#         type.append('womensOther')
 
-df.to_csv('cleaned_handm.csv', index=False)
-print("CSV cleaned!")
+# df['type'] = type
+
+# df.to_csv('cleaned_handm.csv', index=False)
+# print("CSV cleaned!")

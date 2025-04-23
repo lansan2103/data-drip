@@ -237,63 +237,61 @@ face_parser = facer.face_parser('farl/lapa/448', device=device)  # You can try "
 
 
 # Read image
-for i in range(150,151):
-
     
-    image_path = f'/Users/achan/Downloads/FairFace/val/{i}.jpg'  # Update with your image (ideally jpg)
-    image = facer.hwc2bchw(facer.read_hwc(image_path)).to(device=device)  # Convert to tensor
+image_path = f'/Users/achan/Downloads/FairFace/val/{i}.jpg'  # Update with your image (ideally jpg)
+image = facer.hwc2bchw(facer.read_hwc(image_path)).to(device=device)  # Convert to tensor
 
-    # Perform face detection
-    with torch.inference_mode():
-        faces = face_detector(image)
+# Perform face detection
+with torch.inference_mode():
+    faces = face_detector(image)
 
-    # Perform face parsing
-    with torch.inference_mode():
-        faces = face_parser(image, faces)
+# Perform face parsing
+with torch.inference_mode():
+    faces = face_parser(image, faces)
 
-    # Extract segmentation logits
-    seg_logits = faces['seg']['logits']
-    seg_probs = seg_logits.softmax(dim=1)  # n_faces x n_classes x h x w
+# Extract segmentation logits
+seg_logits = faces['seg']['logits']
+seg_probs = seg_logits.softmax(dim=1)  # n_faces x n_classes x h x w
 
-    # Get segmentation mask (argmax gives class index per pixel)
-    seg_mask = seg_probs.argmax(dim=1)[0].cpu().numpy()
+# Get segmentation mask (argmax gives class index per pixel)
+seg_mask = seg_probs.argmax(dim=1)[0].cpu().numpy()
 
-    # Load original image in OpenCV for HSV conversion
-    cv_image = cv2.imread(image_path)  # OpenCV loads images as BGR
-    cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)  # Convert to RGB
-    hsv_image = cv2.cvtColor(cv_image, cv2.COLOR_RGB2HSV)  # Convert to HSV
+# Load original image in OpenCV for HSV conversion
+cv_image = cv2.imread(image_path)  # OpenCV loads images as BGR
+cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)  # Convert to RGB
+hsv_image = cv2.cvtColor(cv_image, cv2.COLOR_RGB2HSV)  # Convert to HSV
 
-    # filter by mapping
-    skin_mask = (seg_mask == features["skin"])
-    eye_mask = np.isin(seg_mask,features["eyes"])
-    hair_mask = (seg_mask == features["hair"])
+# filter by mapping
+skin_mask = (seg_mask == features["skin"])
+eye_mask = np.isin(seg_mask,features["eyes"])
+hair_mask = (seg_mask == features["hair"])
 
-    # compute hsvs of each (these are numpy arrays)
-    skin_hsv = compute_hsv(skin_mask, hsv_image)
-    eye_hsv = compute_hsv(eye_mask, hsv_image)
-    hair_hsv = compute_hsv(hair_mask, hsv_image)
+# compute hsvs of each (these are numpy arrays)
+skin_hsv = compute_hsv(skin_mask, hsv_image)
+eye_hsv = compute_hsv(eye_mask, hsv_image)
+hair_hsv = compute_hsv(hair_mask, hsv_image)
 
-    data = {
-        "skin": skin_hsv.tolist(),
-        "eyes": eye_hsv.tolist(),
-        "hair": hair_hsv.tolist()
-    }
+data = {
+    "skin": skin_hsv.tolist(),
+    "eyes": eye_hsv.tolist(),
+    "hair": hair_hsv.tolist()
+}
 
-    print(data)
+print(data)
 
-    with open("hsv_data.json", "w") as json_file:
-        json.dump(data, json_file, indent=4)
+with open("hsv_data.json", "w") as json_file:
+    json.dump(data, json_file, indent=4)
 
 
-    # convert from hsv to korean season palette
+# convert from hsv to korean season palette
 
-    h, s, v = skin_hsv
+h, s, v = skin_hsv
 
-    season = get_season(h, s, v)
-    palette = get_palette(season)
+season = get_season(h, s, v)
+palette = get_palette(season)
 
-    print(f"Detected Season: {season}")
-    print(f"Recommended Color Palette: {palette}")
+print(f"Detected Season: {season}")
+print(f"Recommended Color Palette: {palette}")
 
 # display_palette(palette, season)
 
