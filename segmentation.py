@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 import json
 import timm.layers
 import mediapipe as mp
-
+import pandas as pd
+import random
 
 '''
 @inproceedings{zheng2022farl,
@@ -20,11 +21,68 @@ import mediapipe as mp
 https://github.com/FacePerceiver/facer
 '''
 
+catalog = pd.read_csv('data/cleaned_handm.csv')
+
+hex_to_color = {
+    # Spring
+    "#FFE066": "Bright yellow",
+    "#FFD1DC": "Baby pink",
+    "#FFA07A": "Salmon",
+    "#FFB347": "Coral",
+    "#98FF98": "Mint",
+    "#87CEFA": "Light blue",
+    "#FFFACD": "Lemon",
+    "#FFDAB9": "Peach",
+    "#FFDEAD": "Light orange",
+    "#FDFD96": "Pastel yellow",
+    "#FFFAE3": "Creamy neutral",
+
+    # Summer
+    "#D8BFD8": "Lilac",
+    "#E0BBE4": "Pastel purple",
+    "#B0C4DE": "Pastel blue",
+    "#FFE4E1": "Light pink",
+    "#F5F5DC": "Ivory",
+    "#D3D3D3": "Light gray",
+    "#E6E6FA": "Lavender",
+    "#FADADD": "Dusty rose",
+    "#F2C1D1": "Dusty pink",
+    "#C1D7E0": "Blue gray",
+    "#F4F1EE": "Stone",
+
+    # Autumn
+    "#8B4000": "Mahogany",
+    "#A0522D": "Sienna",
+    "#C19A6B": "Khaki",
+    "#D2691E": "Chocolate",
+    "#B8860B": "Dark gold",
+    "#808000": "Olive",
+    "#B7410E": "Rust",
+    "#DEB887": "Burlywood",
+    "#F4A460": "Sandy brown",
+    "#A67B5B": "Taupe",
+    "#C2B280": "Wheat",
+
+    # Winter
+    "#003366": "Navy blue",
+    "#8B0000": "Dark red",
+    "#FF1493": "Hot pink",
+    "#00FFFF": "Cyan",
+    "#000080": "Dark blue",
+    "#008080": "Teal",
+    "#800080": "Dark purple",
+    "#990000": "Ruby red",
+    "#228B22": "Emerald green",
+    "#DC143C": "Crimson",
+    "#FF00FF": "Magenta"
+}
+
 # function that computes the mean hsv values
 def compute_hsv(mask, hsv_image):
     masked_pixels = hsv_image[mask]  # Extract only masked pixels
     mean_hsv = np.mean(masked_pixels, axis=0) if masked_pixels.size > 0 else [0, 0, 0]
     return mean_hsv
+
 def show_segmentation(mask, title="Segmentation Mask"):
     plt.figure(figsize=(6, 6))
     plt.imshow(mask, cmap='jet')  # 'jet' colormap makes it easier to see regions
@@ -32,6 +90,7 @@ def show_segmentation(mask, title="Segmentation Mask"):
     plt.title(title)
     plt.axis("off")
     plt.show()
+
 def get_season(h, s, v):
     # h = Hue in degrees (0 - 360)
     # s = Saturation in % (0 - 100)
@@ -47,62 +106,64 @@ def get_season(h, s, v):
         return "Winter"
     else:
         return "Neutral / Depends — Try Soft Tones"
+    
 def get_palette(season):
     palettes = {
-  "Spring": [
-    "#FFE066",  // Bright yellow
-    "#FFD1DC",  // Baby pink
-    "#FFA07A",  // Salmon
-    "#FFB347",  // Coral
-    "#98FF98",  // Mint
-    "#87CEFA",  // Light blue
-    "#FFFACD",  // Lemon
-    "#FFDAB9",  // Peach
-    "#FFDEAD",  // Light orange
-    "#FDFD96",  // Pastel yellow
-    "#FFFAE3"   // Creamy neutral
-  ],
-  "Summer": [
-    "#D8BFD8",  // Lilac
-    "#E0BBE4",  // Pastel purple
-    "#B0C4DE",  // Pastel blue
-    "#FFE4E1",  // Light pink
-    "#F5F5DC",  // Ivory
-    "#D3D3D3",  // Light gray
-    "#E6E6FA",  // Lavender
-    "#FADADD",  // Dusty rose
-    "#F2C1D1",  // Dusty pink
-    "#C1D7E0",  // Blue gray
-    "#F4F1EE"   // Stone
-  ],
-  "Autumn": [
-    "#8B4000",  // Mahogany
-    "#A0522D",  // Sienna
-    "#C19A6B",  // Khaki
-    "#D2691E",  // Chocolate
-    "#B8860B",  // Dark gold
-    "#808000",  // Olive
-    "#B7410E",  // Rust
-    "#DEB887",  // Burlywood
-    "#F4A460",  // Sandy brown
-    "#A67B5B",  // Taupe
-    "#C2B280"   // Wheat
-  ],
-  "Winter": [
-    "#003366",  // Navy blue
-    "#8B0000",  // Dark red
-    "#FF1493",  // Hot pink
-    "#00FFFF",  // Cyan
-    "#000080",  // Dark blue
-    "#008080",  // Teal
-    "#800080",  // Dark purple
-    "#990000",  // Ruby red
-    "#228B22",  // Emerald green
-    "#DC143C",  // Crimson
-    "#FF00FF"   // Magenta
-  ]
-}
+        "Spring": [
+            "#FFE066",  # Bright yellow
+            "#FFD1DC",  # Baby pink
+            "#FFA07A",  # Salmon
+            "#FFB347",  # Coral
+            "#98FF98",  # Mint
+            "#87CEFA",  # Light blue
+            "#FFFACD",  # Lemon
+            "#FFDAB9",  # Peach
+            "#FFDEAD",  # Light orange
+            "#FDFD96",  # Pastel yellow
+            "#FFFAE3"   # Creamy neutral
+        ],
+        "Summer": [
+            "#D8BFD8",  # Lilac
+            "#E0BBE4",  # Pastel purple
+            "#B0C4DE",  # Pastel blue
+            "#FFE4E1",  # Light pink
+            "#F5F5DC",  # Ivory
+            "#D3D3D3",  # Light gray
+            "#E6E6FA",  # Lavender
+            "#FADADD",  # Dusty rose
+            "#F2C1D1",  # Dusty pink
+            "#C1D7E0",  # Blue gray
+            "#F4F1EE"   # Stone
+        ],
+        "Autumn": [
+            "#8B4000",  # Mahogany
+            "#A0522D",  # Sienna
+            "#C19A6B",  # Khaki
+            "#D2691E",  # Chocolate
+            "#B8860B",  # Dark gold
+            "#808000",  # Olive
+            "#B7410E",  # Rust
+            "#DEB887",  # Burlywood
+            "#F4A460",  # Sandy brown
+            "#A67B5B",  # Taupe
+            "#C2B280"   # Wheat
+        ],
+        "Winter": [
+            "#003366",  # Navy blue
+            "#8B0000",  # Dark red
+            "#FF1493",  # Hot pink
+            "#00FFFF",  # Cyan
+            "#000080",  # Dark blue
+            "#008080",  # Teal
+            "#800080",  # Dark purple
+            "#990000",  # Ruby red
+            "#228B22",  # Emerald green
+            "#DC143C",  # Crimson
+            "#FF00FF"   # Magenta
+        ]
+    }
     return palettes.get(season)
+
 def display_palette(palette, season):
     n = len(palette)
     fig, ax = plt.subplots(figsize=(n * 2, 2))
@@ -128,7 +189,50 @@ features = {
     "ears": 11
     }
 
+import pandas as pd
+import random
 
+import random
+import pandas as pd
+
+import random
+import pandas as pd
+
+def get_outfit(gender, palette, df, hex_to_color):
+    top_hex, bottom_hex, shoe_hex = random.sample(palette, 3) # random sample
+
+    top_color = hex_to_color.get(top_hex)
+    bottom_color = hex_to_color.get(bottom_hex)
+    shoe_color = hex_to_color.get(shoe_hex)
+
+    gender = gender.lower()
+    type_top = f"{gender}Top"
+    type_bottom = f"{gender}Bottom"
+    type_shoes = f"{gender}Shoes"
+
+    # helper func
+    def find_index_url(item_type, color):
+        matches = df[
+            (df['type'] == item_type) &
+            (df['colorName'].str.lower() == color.lower())
+        ]
+        if not matches.empty:
+            selected = matches.sample(1)
+            index = selected.index[0]
+            url = selected['url'].values[0]
+            return index, url
+        return None, None
+
+    # index url tuples
+    top_idx, top_url = find_index_url(type_top, top_color)
+    bottom_idx, bottom_url = find_index_url(type_bottom, bottom_color)
+    shoe_idx, shoe_url = find_index_url(type_shoes, shoe_color)
+
+    return {
+        "top": {"index": top_idx, "url": top_url},
+        "bottom": {"index": bottom_idx, "url": bottom_url},
+        "shoes": {"index": shoe_idx, "url": shoe_url}
+    }
 
 # Define device (GPU or CPU)
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
