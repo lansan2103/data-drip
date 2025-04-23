@@ -109,57 +109,57 @@ def get_season(h, s, v):
     
 def get_palette(season):
     palettes = {
-  "Spring": [
-    "#FFE066",  // Bright yellow
-    "#FFD1DC",  // Baby pink
-    "#FFA07A",  // Salmon
-    "#FFB347",  // Coral
-    "#98FF98",  // Mint
-    "#87CEFA",  // Light blue
-    "#FFFACD",  // Lemon
-    "#FFDAB9",  // Peach
-    "#FFDEAD",  // Light orange
-    "#FDFD96",  // Pastel yellow
-    "#FFFAE3"   // Creamy neutral
+"Spring": [
+    "#FFE066",  # Bright yellow
+    "#FFD1DC",  # Baby pink
+    "#FFA07A",  # Salmon
+    "#FFB347",  # Coral
+    "#98FF98",  # Mint
+    "#87CEFA",  # Light blue
+    "#FFFACD",  # Lemon
+    "#FFDAB9",  # Peach
+    "#FFDEAD",  # Light orange
+    "#FDFD96",  # Pastel yellow
+    "#FFFAE3"   # Creamy neutral
   ],
   "Summer": [
-    "#D8BFD8",  // Lilac
-    "#E0BBE4",  // Pastel purple
-    "#B0C4DE",  // Pastel blue
-    "#FFE4E1",  // Light pink
-    "#F5F5DC",  // Ivory
-    "#D3D3D3",  // Light gray
-    "#E6E6FA",  // Lavender
-    "#FADADD",  // Dusty rose
-    "#F2C1D1",  // Dusty pink
-    "#C1D7E0",  // Blue gray
-    "#F4F1EE"   // Stone
+    "#D8BFD8",  # Lilac
+    "#E0BBE4",  # Pastel purple
+    "#B0C4DE",  # Pastel blue
+    "#FFE4E1",  # Light pink
+    "#F5F5DC",  # Ivory
+    "#D3D3D3",  # Light gray
+    "#E6E6FA",  # Lavender
+    "#FADADD",  # Dusty rose
+    "#F2C1D1",  # Dusty pink
+    "#C1D7E0",  # Blue gray
+    "#F4F1EE"   # Stone
   ],
   "Autumn": [
-    "#8B4000",  // Mahogany
-    "#A0522D",  // Sienna
-    "#C19A6B",  // Khaki
-    "#D2691E",  // Chocolate
-    "#B8860B",  // Dark gold
-    "#808000",  // Olive
-    "#B7410E",  // Rust
-    "#DEB887",  // Burlywood
-    "#F4A460",  // Sandy brown
-    "#A67B5B",  // Taupe
-    "#C2B280"   // Wheat
+    "#8B4000",  # Mahogany
+    "#A0522D",  # Sienna
+    "#C19A6B",  # Khaki
+    "#D2691E",  # Chocolate
+    "#B8860B",  # Dark gold
+    "#808000",  # Olive
+    "#B7410E",  # Rust
+    "#DEB887",  # Burlywood
+    "#F4A460",  # Sandy brown
+    "#A67B5B",  # Taupe
+    "#C2B280"   # Wheat
   ],
   "Winter": [
-    "#003366",  // Navy blue
-    "#8B0000",  // Dark red
-    "#FF1493",  // Hot pink
-    "#00FFFF",  // Cyan
-    "#000080",  // Dark blue
-    "#008080",  // Teal
-    "#800080",  // Dark purple
-    "#990000",  // Ruby red
-    "#228B22",  // Emerald green
-    "#DC143C",  // Crimson
-    "#FF00FF"   // Magenta
+    "#003366",  # Navy blue
+    "#8B0000",  # Dark red
+    "#FF1493",  # Hot pink
+    "#00FFFF",  # Cyan
+    "#000080",  # Dark blue
+    "#008080",  # Teal
+    "#800080",  # Dark purple
+    "#990000",  # Ruby red
+    "#228B22",  # Emerald green
+    "#DC143C",  # Crimson
+    "#FF00FF"   # Magenta
   ]
 }
     return palettes.get(season)
@@ -188,15 +188,6 @@ features = {
     "hair": 10,
     "ears": 11
     }
-
-import pandas as pd
-import random
-
-import random
-import pandas as pd
-
-import random
-import pandas as pd
 
 def get_outfit(gender, palette, df, hex_to_color):
     top_hex, bottom_hex, shoe_hex = random.sample(palette, 3) # random sample
