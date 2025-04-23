@@ -238,7 +238,7 @@ face_parser = facer.face_parser('farl/lapa/448', device=device)  # You can try "
 
 # Read image
     
-image_path = f'/Users/achan/Downloads/FairFace/val/{i}.jpg'  # Update with your image (ideally jpg)
+image_path = f'INSERT IMAGE PATH'  # Update with your image (ideally jpg)
 image = facer.hwc2bchw(facer.read_hwc(image_path)).to(device=device)  # Convert to tensor
 
 # Perform face detection
