@@ -1,14 +1,14 @@
 .header {
-    background-color: #3d90ef;
+    background-color: #c5a17c;
     padding: 1px 50px;
-    color: white;
+    color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
   .headeadds {
-    background-color: #3d90ef;
+    background-color: #efce3d;
     padding: 10px 20px;
     color: white;
     display: flex;
