@@ -48,41 +48,46 @@ function Accept() {
     </section>
   );
 }
-
 function App() {
-  const [display, setDisplay] = useState(0);
+  const [file, setFile] = useState(null);
+
+  const handleChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleUpload = async () => {
+    if (!file) return alert("Please select a file first.");
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch('http://127.0.0.1:5000/upload', {
+      method: 'POST',
+      body: formData
+    });
+
+    if (response.ok) {
+      alert("Upload successful!");
+    } else {
+      alert("Upload failed.");
+    }
+  };
 
   return (
     <div className="app">
 
       <h1 className= "title">DataDrip Test</h1>
       <hr />
-      <br/>
       <h2 className="subheader">Please insert a photo of your face in natural lighting from shoulders up</h2>
-      <br/>
-      <input type="file" />
-      
-      <button>Upload</button>
-      
+      <input type="file" onChange={handleChange} />
+      <button onClick={handleUpload}>Upload</button>
+
       <Accept />
       <hr />
-
-    
-      {/* <h1 className="introduction">This is an AI-powered fashion assistant that helps you create the perfect outfit for any occasion! </h1>
-      <h1 className="introduction">Simply upload an image of a clothing item, and the program will analyze its style, color, and fit, then recommend complementary pieces from your wardrobe or suggest new ones to complete your look. </h1>
-      <h1 className="introduction">Whether you're dressing for a formal event, a casual day out, or a business meeting, the app provides outfit suggestions tailored to the occasion.</h1>
-      <h1 className="introduction">With real-time feedback on how well your outfit matches the event, you'll always step out in style with confidence!</h1> */}
-      
-      
-      
-
-      
     </div>
-
-
-    
   );
 }
+
 
 
 
