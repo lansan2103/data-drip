@@ -55,7 +55,7 @@ function App() {
   return (
     <div className="app">
 
-      <h1>DataDrip Test</h1>
+      <h1 className= "title">DataDrip Test</h1>
       <hr />
       <br/>
       <h2 className="subheader">Please insert a photo of your face in natural lighting from shoulders up</h2>
