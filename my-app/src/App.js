@@ -2,39 +2,22 @@ import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import './App.css';
 
-
 function Accept({ setFile }) {
-  const {
-    acceptedFiles,
-    fileRejections,
-    getRootProps,
-    getInputProps
-  } = useDropzone({
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
       'image/jpeg': [],
       'image/png': []
     },
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
-        setFile(acceptedFiles[0]); // Set the first accepted file
+        setFile(acceptedFiles[0]);
       }
     }
   });
 
-  const acceptedFileItems = acceptedFiles.map(file => (
+  const fileList = acceptedFiles.map(file => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
-    </li>
-  ));
-
-  const fileRejectionItems = fileRejections.map(({ file, errors }) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-      <ul>
-        {errors.map(e => (
-          <li key={e.code}>{e.message}</li>
-        ))}
-      </ul>
     </li>
   ));
 
@@ -42,14 +25,11 @@ function Accept({ setFile }) {
     <section className="container">
       <div {...getRootProps({ className: 'dropzone' })}>
         <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p>Drag 'n' drop an image here, or click to select</p>
       </div>
-
       <aside>
-        <h4>Accepted files:</h4>
-        <ul>{acceptedFileItems}</ul>
-        <h4>Rejected files:</h4>
-        <ul>{fileRejectionItems}</ul>
+        <h4>Selected File:</h4>
+        <ul>{fileList}</ul>
       </aside>
     </section>
   );
@@ -57,41 +37,62 @@ function Accept({ setFile }) {
 
 function App() {
   const [file, setFile] = useState(null);
+  const [season, setSeason] = useState('');
+  const [palette, setPalette] = useState([]);
 
   const handleUpload = async () => {
-    if (!file) return alert("Please select a file first.");
+    if (!file) {
+      alert('Please select a file first.');
+      return;
+    }
 
     const formData = new FormData();
     formData.append('file', file);
 
-    const response = await fetch('http://127.0.0.1:5000/upload', {
-      method: 'POST',
-      body: formData
-    });
+    try {
+      const response = await fetch('http://127.0.0.1:5000/upload', {
+        method: 'POST',
+        body: formData
+      });
 
-    if (response.ok) {
-      alert("Upload successful!");
-    } else {
-      alert("Upload failed.");
+      if (!response.ok) {
+        throw new Error('Upload failed.');
+      }
+
+      const data = await response.json();
+      console.log(data);  // <-- ADD THIS
+      setSeason(data.season);
+      setPalette(data.palette);
+
+    } catch (error) {
+      alert(error.message);
     }
   };
 
   return (
     <div className="app">
       <h1 className="title">DataDrip Test</h1>
-      <hr />
-      <h2 className="subheader">Please insert a photo of your face in natural lighting from shoulders up</h2>
+      <h2 className="subheader">Upload a clear photo of your face</h2>
 
       <Accept setFile={setFile} />
+      <button onClick={handleUpload} className="upload-button">Upload</button>
 
-      <button onClick={handleUpload}>Upload</button> {/* <-- Add an Upload button */}
-      
-      <hr />
+      {season && (
+        <div className="results">
+          <h2>Detected Season: {season}</h2>
+          <h3>Recommended Palette:</h3>
+          <div className="palette-grid">
+            {palette.map(([colorName, hexValue], index) => (
+              <div key={index} className="color-box">
+                <div className="color-swatch" style={{ backgroundColor: hexValue }}></div>
+                <div className="color-name">{colorName}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
-
-
-
 
 export default App;
