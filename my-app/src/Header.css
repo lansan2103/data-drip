@@ -1,5 +1,5 @@
 .header {
-    background-color: #c5a17c;
+    background-color: #d1a77d;
     padding: 1px 50px;
     color: rgb(255, 255, 255);
     display: flex;
@@ -14,4 +14,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .link {
+    text-decoration: none; /* Removes underline */
+    color: #7a431c; /* Change this to whatever color you want */
+    font-weight: bold; /* Optional: make it stand out */
+  } 
+
+  .link:hover {
+    color: #431d09; /* Optional: slightly darker on hover */
   }
