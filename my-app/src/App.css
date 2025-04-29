@@ -64,14 +64,6 @@ body {
   margin-left: 2rem;
 }
 
-.section{
-  color: #d462d7;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 1rem;
-  text-align: center;
-  margin-top: 2rem;
-}
-
 .container{
   color: #000000;
   width: 100%;
@@ -90,7 +82,7 @@ body {
 }
 
 .introduction{
-  color: #8f6340;
+  color: #be5c54;
   width: 50%;
   margin: 0 auto;
   .playwrite-mx-guides-regular {
