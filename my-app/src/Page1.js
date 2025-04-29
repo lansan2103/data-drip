@@ -9,36 +9,40 @@ function Page1() {
       <h1 className="introduction">Whether you're dressing for a formal event, a casual day out, or a business meeting, the app provides outfit suggestions tailored to the occasion.</h1>
       <h1 className="introduction">With real-time feedback on how well your outfit matches the event, you'll always step out in style with confidence!</h1>
 
-        <br />
-
-        <Link to="/page1">
-        <button className="nav-button">Go to Our Test!</button>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      
+      <Link to="/page1">
+        <button className="nav-button" style={{marginLeft: '250px'}}>Go to Our Test!</button>
       </Link>
 
       <br />
       <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
       
-      
-      
-      
-      <p>
+      {/* <p>
       Click on the button below
-      </p>
+      </p> */}
       <Link to="/page2">
-        <button className="nav-button">Go to About</button>
+        <button className="nav-button" style={{marginLeft: '250px'}}>Go to About</button>
       </Link>
+
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+
     </div>
+
+    
   );
 }
 

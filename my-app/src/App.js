@@ -75,7 +75,7 @@ function App() {
       <h2 className="subheader">Upload a clear photo of your face</h2>
 
       <Accept setFile={setFile} />
-      <button onClick={handleUpload} className="upload-button">Upload</button>
+      <button onClick={handleUpload} className="upload-button" style={{marginLeft: '50px'}}>Upload</button>
 
       {season && (
         <div className="results">
