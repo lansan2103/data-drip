@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import './App.css';
 
 
-function Accept() {
+function Accept({ setFile }) {
   const {
     acceptedFiles,
     fileRejections,
@@ -13,6 +13,11 @@ function Accept() {
     accept: {
       'image/jpeg': [],
       'image/png': []
+    },
+    onDrop: (acceptedFiles) => {
+      if (acceptedFiles.length > 0) {
+        setFile(acceptedFiles[0]); // Set the first accepted file
+      }
     }
   });
 
@@ -49,12 +54,9 @@ function Accept() {
     </section>
   );
 }
+
 function App() {
   const [file, setFile] = useState(null);
-
-  const handleChange = (event) => {
-    setFile(event.target.files[0]);
-  };
 
   const handleUpload = async () => {
     if (!file) return alert("Please select a file first.");
@@ -76,12 +78,14 @@ function App() {
 
   return (
     <div className="app">
-
-      <h1 className= "title">DataDrip Test</h1>
+      <h1 className="title">DataDrip Test</h1>
       <hr />
       <h2 className="subheader">Please insert a photo of your face in natural lighting from shoulders up</h2>
 
-      <Accept />
+      <Accept setFile={setFile} />
+
+      <button onClick={handleUpload}>Upload</button> {/* <-- Add an Upload button */}
+      
       <hr />
     </div>
   );
