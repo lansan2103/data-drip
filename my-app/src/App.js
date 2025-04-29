@@ -39,6 +39,7 @@ function Accept() {
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
       </div>
+
       <aside>
         <h4>Accepted files:</h4>
         <ul>{acceptedFileItems}</ul>
@@ -79,8 +80,6 @@ function App() {
       <h1 className= "title">DataDrip Test</h1>
       <hr />
       <h2 className="subheader">Please insert a photo of your face in natural lighting from shoulders up</h2>
-      <input type="file" onChange={handleChange} />
-      <button onClick={handleUpload}>Upload</button>
 
       <Accept />
       <hr />
