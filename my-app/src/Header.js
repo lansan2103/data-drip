@@ -6,8 +6,8 @@ import './Header.css';
 function Header() {
     return (
         <header className = 'header'>
-            <img src="logo.png" alt="DataDrip" className="logo"/>
-            <Link to='/' className='link'>DataDrip</Link> 
+            {/* <img src="logo.png" alt="DataDrip" className="logo"/> */}
+            <Link to='/' className='logo-link'>DataDrip</Link> 
                 {/* until i find out how to be able to click the DataDrip pic */}
                 
             <nav>

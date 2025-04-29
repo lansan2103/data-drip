@@ -7,6 +7,17 @@
     align-items: center;
   }
 
+  .logo-link {
+    font-size: 4rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #7a431c;
+}
+
+.logo-link:hover {
+  color: #431d09;
+}
+
   .headeadds {
     background-color: #efce3d;
     padding: 10px 20px;
@@ -17,11 +28,11 @@
   }
 
   .link {
-    text-decoration: none; /* Removes underline */
-    color: #7a431c; /* Change this to whatever color you want */
-    font-weight: bold; /* Optional: make it stand out */
+    text-decoration: none;
+    color: #7a431c;
+    font-weight: bold;
   } 
 
   .link:hover {
-    color: #431d09; /* Optional: slightly darker on hover */
+    color: #431d09;
   }
