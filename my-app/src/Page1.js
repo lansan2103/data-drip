@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 function Page1() {
   return (
     <div>
+      <br />
+      <br />
       <h1 className="introduction">This is an AI-powered fashion assistant that helps you create the perfect outfit for any occasion!</h1>
       <h1 className="introduction">Simply upload an image of a clothing item, and the program will analyze its style, color, and fit, then recommend complementary pieces from your wardrobe or suggest new ones to complete your look. </h1>
       <h1 className="introduction">Whether you're dressing for a formal event, a casual day out, or a business meeting, the app provides outfit suggestions tailored to the occasion.</h1>
