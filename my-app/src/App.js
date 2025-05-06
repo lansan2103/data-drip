@@ -28,7 +28,7 @@ function Accept({ setFile }) {
         <p>Drag 'n' drop an image here, or click to select</p>
       </div>
       <aside>
-        <h4>Selected File:</h4>
+        <h4 className = 'subheader'>Selected File:</h4>
         <ul>{fileList}</ul>
       </aside>
     </section>
@@ -72,6 +72,9 @@ function App() {
   return (
     <div className="app">
       <h1 className="title">DataDrip Test</h1>
+      
+      <hr />
+
       <h2 className="subheader">Upload a clear photo of your face</h2>
 
       <Accept setFile={setFile} />
