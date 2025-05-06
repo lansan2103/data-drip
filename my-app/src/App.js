@@ -56,7 +56,7 @@ function App() {
       });
 
       if (!response.ok) {
-        throw new Error('Upload failed.');
+        throw new Error('Unable to detect face. Please try another image.');
       }
 
       const data = await response.json();

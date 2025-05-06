@@ -81,16 +81,58 @@ def compute_hsv(mask, hsv_image):
     return mean_hsv
 
 def get_season(h, s, v):
-    if 20 <= h <= 40 and s > 40 and v > 70:
-        return "Spring"
-    elif 10 <= h <= 30 and s < 40 and v > 60:
-        return "Summer"
-    elif 30 <= h <= 50 and s > 30 and v < 70:
-        return "Autumn"
-    elif 10 <= h <= 25 and s > 50 and v < 50:
-        return "Winter"
-    else:
-        return "Neutral / Depends — Try Soft Tones"
+    # return "h: ", h, " s: ", s, " v: ", v
+    spring = 0
+    summer = 0
+    autumn = 0
+    winter = 0
+    # if 20 <= h <= 40 and s > 40 and v > 70:
+    #     return "Spring"
+    # elif 10 <= h <= 30 and s < 40 and v > 60:
+    #     return "Summer"
+    # elif 30 <= h <= 50 and s > 30 and v < 70:
+    #     return "Autumn"
+    # elif 10 <= h <= 25 and s > 50 and v < 50:
+    #     return "Winter"
+    # Points for h value
+    if 14 <= h <= 31:
+        spring += 1
+    if 0 <= h <= 17:
+        summer += 1
+    if 21 <= h <= 42:
+        autumn += 1
+    if 0 <= h <= 10 or 198 <= h <= 255:
+        winter += 1
+    # Points for s value
+    if 40 <= s <= 80:
+        spring += 1
+    if 10 <= s <= 40:
+        summer += 1
+    if 20 <= s <= 60:
+        autumn += 1
+    if 30 <= s <= 100:
+        winter += 1
+    # Points for v value
+    if 65 <= v <= 100:
+        spring += 1
+    if 60 <= v <= 90:
+        summer += 1
+    if 30 <= v <= 75:
+        autumn += 1
+    if 15 <= v <= 75:
+        winter += 1
+    seasons = {'spring': spring,
+               'summer': summer,
+               'autumn': autumn,
+               'winter': winter}
+    max_value = spring
+    max_key = 'spring'
+    for key, value in seasons.items():
+        if value > max_value:
+            max_value = value
+            max_key = key
+    return max_key
+    
 
 def get_palette(season):
     return seasonal_palettes_hex.get(season, [])
