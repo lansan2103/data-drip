@@ -18,7 +18,8 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 face_detector = facer.face_detector('retinaface/mobilenet', device=device)
 face_parser = facer.face_parser('farl/lapa/448', device=device)
-# catalog = pd.read_csv('data/cleaned_handm.csv')
+catalog = pd.read_csv('cleaned_handm.csv')
+
 
 # Seasonal palettes from palettechart.py
 seasonal_palettes_hex = {
@@ -121,21 +122,64 @@ def get_season(h, s, v):
         autumn += 1
     if 15 <= v <= 75:
         winter += 1
-    seasons = {'spring': spring,
-               'summer': summer,
-               'autumn': autumn,
-               'winter': winter}
+    seasons = {'Spring': spring,
+               'Summer': summer,
+               'Autumn': autumn,
+               'Winter': winter}
     max_value = spring
-    max_key = 'spring'
+    max_key = 'Spring'
     for key, value in seasons.items():
         if value > max_value:
             max_value = value
             max_key = key
     return max_key
-    
 
 def get_palette(season):
     return seasonal_palettes_hex.get(season, [])
+
+def get_outfit(gender, palette, df, hex_to_color):
+    hex_values = [hex for (_, hex) in palette]
+    top_hex, bottom_hex, shoe_hex = random.sample(hex_values, 3) # random sample
+
+
+    #top_color = hex_to_color.get(top_hex)
+    #bottom_color = hex_to_color.get(bottom_hex)
+    #shoe_color = hex_to_color.get(shoe_hex)
+
+    # currently putting black here 
+    top_color = "Black"
+    bottom_color = "Black"
+    shoe_color = "Black"
+
+    gender = gender.lower()
+    type_top = f"{gender}Top"
+    type_bottom = f"{gender}Bottom"
+    type_shoes = f"{gender}Shoes"
+
+    # helper func
+    def find_index_url(item_type, color):
+        
+        matches = df[
+            (df['type'] == item_type) &
+            (df['colorName'].str.lower() == color.lower())
+        ]
+        if not matches.empty:
+            selected = matches.sample(1)
+            index = selected.index[0]
+            url = selected['url'].values[0]
+            return index, url
+        return None, None
+
+    # index url tuples
+    top_idx, top_url = find_index_url(type_top, top_color)
+    bottom_idx, bottom_url = find_index_url(type_bottom, bottom_color)
+    shoe_idx, shoe_url = find_index_url(type_shoes, shoe_color)
+
+    return {
+    "top": {"index": int(top_idx) if top_idx is not None else None, "url": top_url},
+    "bottom": {"index": int(bottom_idx) if bottom_idx is not None else None, "url": bottom_url},
+    "shoes": {"index": int(shoe_idx) if shoe_idx is not None else None, "url": shoe_url}
+    }
 
 @app.route('/test', methods=['GET'])
 def test():
@@ -186,13 +230,17 @@ def upload_file():
 
         season = get_season(h, s, v)
         palette = get_palette(season)
+        links = get_outfit("mens", palette, catalog, hex_to_color)
+
 
         return jsonify({
             "season": season,
-            "palette": palette
+            "palette": palette,
+            "links": links
         })
 
     except Exception as e:
+        print(e)
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':

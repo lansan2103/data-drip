@@ -39,6 +39,7 @@ function App() {
   const [file, setFile] = useState(null);
   const [season, setSeason] = useState('');
   const [palette, setPalette] = useState([]);
+  const [links, setLink] = useState({});
 
   const handleUpload = async () => {
     if (!file) {
@@ -61,8 +62,11 @@ function App() {
 
       const data = await response.json();
       console.log(data);  // <-- ADD THIS
+      console.log('Data received from backend:', data); // Add this line to see the whole data object
+      console.log('Palette:', data.palette);  // Specifically print the palette
       setSeason(data.season);
       setPalette(data.palette);
+      setLink(data.links);
 
     } catch (error) {
       alert(error.message);
@@ -94,6 +98,18 @@ function App() {
           </div>
         </div>
       )}
+
+      {links.top && links.bottom && links.shoes && (
+       <div className="results">
+        <h3>Outfit Links</h3>
+        <div>Top: {links.top.url}</div>
+        <div>Bottom: {links.bottom.url}</div>
+        <div>Shoes: {links.shoes.url}</div>
+       </div>
+      )}
+      
+
+
     </div>
   );
 }
