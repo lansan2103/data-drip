@@ -9,7 +9,8 @@ import pandas as pd
 import random
 
 app = Flask(__name__)
-CORS(app)
+
+CORS(app, origins="*")
 
 UPLOAD_FOLDER = './uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -139,17 +140,23 @@ def get_palette(season):
 
 def get_outfit(gender, palette, df, hex_to_color):
     hex_values = [hex for (_, hex) in palette]
+    colors = []
+    for h in hex_values:
+        colors.append(hex_to_color.get(h))
+    random.shuffle(colors)
     top_hex, bottom_hex, shoe_hex = random.sample(hex_values, 3) # random sample
+    hexes = random.sample(hex_values, 3)
+    print(hexes)
 
 
-    #top_color = hex_to_color.get(top_hex)
-    #bottom_color = hex_to_color.get(bottom_hex)
-    #shoe_color = hex_to_color.get(shoe_hex)
+    top_color = hex_to_color.get(top_hex)
+    bottom_color = hex_to_color.get(bottom_hex)
+    shoe_color = hex_to_color.get(shoe_hex)
 
     # currently putting black here 
-    top_color = "Black"
-    bottom_color = "Black"
-    shoe_color = "Black"
+    # top_color = "Black"
+    # bottom_color = "Black"
+    # shoe_color = "Black"
 
     gender = gender.lower()
     type_top = f"{gender}Top"
@@ -171,9 +178,33 @@ def get_outfit(gender, palette, df, hex_to_color):
         return None, None
 
     # index url tuples
-    top_idx, top_url = find_index_url(type_top, top_color)
-    bottom_idx, bottom_url = find_index_url(type_bottom, bottom_color)
-    shoe_idx, shoe_url = find_index_url(type_shoes, shoe_color)
+    # loop through shuffled colors calling this for each color, if none then go to the next color 
+    top_url = None
+    top_idx = None
+    for c in colors:
+        if top_url == None:
+            top_idx, top_url = find_index_url(type_top, c)
+        else: 
+            break
+    random.shuffle(colors)
+
+    bottom_url = None
+    bottom_idx = None
+    for c in colors:
+        if bottom_url == None:
+            bottom_idx, bottom_url = find_index_url(type_bottom, c)
+        else: 
+            break
+    random.shuffle(colors)
+
+    shoe_url = None
+    shoe_idx = None
+    for c in colors:
+        if shoe_url == None:
+            shoe_idx, shoe_url = find_index_url(type_shoes, c)
+        else: 
+            break
+    random.shuffle(colors)
 
     return {
     "top": {"index": int(top_idx) if top_idx is not None else None, "url": top_url},
@@ -216,7 +247,7 @@ def upload_file():
 
         h, s, v = skin_hsv
 
-        # 💥 ADD THIS: if no good skin found, default
+        # if no good skin found, default
         if h == 0 and s == 0 and v == 0:
             return jsonify({
                 "season": "Neutral",
@@ -245,4 +276,4 @@ def upload_file():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    app.run(host='localhost',port=5000, debug=True)
