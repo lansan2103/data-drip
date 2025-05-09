@@ -190,6 +190,7 @@ def upload_file():
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
     file = request.files['file']
+    gender = request.form['gender']
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
 
@@ -230,7 +231,7 @@ def upload_file():
 
         season = get_season(h, s, v)
         palette = get_palette(season)
-        links = get_outfit("mens", palette, catalog, hex_to_color)
+        links = get_outfit(gender, palette, catalog, hex_to_color)
 
 
         return jsonify({

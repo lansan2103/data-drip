@@ -39,6 +39,7 @@ function App() {
   const [file, setFile] = useState(null);
   const [season, setSeason] = useState('');
   const [palette, setPalette] = useState([]);
+  const [gender, setGender] = useState('');
   const [links, setLink] = useState({});
 
   const handleUpload = async () => {
@@ -46,9 +47,14 @@ function App() {
       alert('Please select a file first.');
       return;
     }
+    if (!gender) {
+      alert('Please select your gender first.');
+      return;
+    }
 
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('gender', gender);
 
     try {
       const response = await fetch('http://127.0.0.1:5000/upload', {
@@ -79,7 +85,11 @@ function App() {
       
       <hr />
 
-      <h2 className="subheader">Upload a clear photo of your face</h2>
+      <h2 className="subheader">Upload a clear photo of your face and select your gender</h2>
+
+      {/* // Change the Class Name when styling */}
+      <button onClick ={() => setGender('mens')} className = "upload-button" style={{marginLeft: '740px'}}>Male</button>
+      <button onClick ={() => setGender('womens')} className = "upload-button" style={{marginLeft: '740px'}}>Female</button>
 
       <Accept setFile={setFile} />
       <button onClick={handleUpload} className="upload-button" style={{marginLeft: '740px'}}>Upload</button>
