@@ -144,8 +144,6 @@ body {
   transition: background-color 0.3s ease, transform 0.2s ease;
   
   align-items: center;
-  /* margin-left: auto;
-  margin-right: auto; */
 }
 
 .upload-button:hover {
@@ -156,22 +154,6 @@ body {
 .upload-button:active {
   background-color: #3e7e8e;
   transform: translateY(0);
-}
-
-.selected-button {
-  background-color: #483206;
-  transform: translateY(-1px);
-  color: white;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .results{
