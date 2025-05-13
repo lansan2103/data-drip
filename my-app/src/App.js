@@ -16,9 +16,9 @@ function Accept({ setFile }) {
   });
 
   const fileList = acceptedFiles.map(file => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
+    <p key={file.path}>
+      {file.path}
+    </p>
   ));
 
   return (
@@ -80,19 +80,23 @@ function App() {
   };
 
   return (
-    <div className="app">
+    <div className="app" style={{ textAlign: 'center', marginTop: '20px' }}>
       <h1 className="title">DataDrip Test</h1>
       
       <hr />
 
-      <h2 className="subheader">Upload a clear photo of your face and select your gender</h2>
+      <h2 className="subheader">Please select your gender and upload a clear photo of your face :D</h2>
 
       {/* // Change the Class Name when styling */}
-      <button onClick ={() => setGender('mens')} className = "upload-button" style={{marginLeft: '740px'}}>Male</button>
-      <button onClick ={() => setGender('womens')} className = "upload-button" style={{marginLeft: '740px'}}>Female</button>
+      {/* <div style={{ textAlign: 'center', marginTop: '20px' }}> */}
+      <button onClick ={() => setGender('mens')} className={gender === 'mens' ? 'selected-button' : 'upload-button'}>Male</button>
+      <button onClick ={() => setGender('womens')} className ={gender === 'womens' ? 'selected-button' : 'upload-button'}>Female</button>
+      
+      {/* <button onClick ={() => setGender('womens')} className = "upload-button" style={{marginLeft: '740px'}}>Female</button> */}
 
       <Accept setFile={setFile} />
-      <button onClick={handleUpload} className="upload-button" style={{marginLeft: '740px'}}>Upload</button>
+      <button onClick={handleUpload} className="upload-button" >Upload</button>
+      {/* </div> */}
 
       {season && (
         <div className="results">
