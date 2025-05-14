@@ -6,8 +6,7 @@ import './index.css';
 import App from './App.js';
 
 
-import Page1 from './Page1';
-import Page2 from './Page2';
+import About from './about.js';
 
 import Layout from './Layout';
 
@@ -19,9 +18,8 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Layout />}>
-          <Route index element={<Page1 />} />
-          <Route path="page1" element={<App />} />
-          <Route path="page2" element={<Page2 />} /> 
+          <Route index element={<About />} />
+          <Route path="test" element={<App />} /> 
         </Route>
       </Routes>
     </BrowserRouter>

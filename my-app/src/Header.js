@@ -1,20 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
-
+import logo from './datadriplogo.png'
 
 function Header() {
     return (
         <header className = 'header'>
-            {/* <img src="logo.png" alt="DataDrip" className="logo"/> */}
-            <Link to='/' className='logo-link'>DataDrip</Link> 
-                {/* until i find out how to be able to click the DataDrip pic */}
-                
+            <div className='logo-container'>
+                <img src={logo} alt="DataDrip" className="logo"/>
+                <Link to='/' className='logo-link'>DataDrip</Link> 
+            </div>
+
             <nav>
                 <ul>
-                        <Link to='/page1'className='link'>Take the Test</Link>
-                    <br />
-                        <Link to='/page2' className='link'>About</Link>
+                    <Link to='/' className='link'>About</Link>
+
+                    <Link to='/test'className='link'>Take the Test</Link>
                 </ul>
             </nav>
         </header>

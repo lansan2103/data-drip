@@ -1,6 +1,6 @@
 import React from "react";
 
-   function Page2() {
+   function About() {
 
         return (
           <div>
@@ -32,4 +32,4 @@ import React from "react";
 
     }
 
-    export default Page2;
+    export default About;
