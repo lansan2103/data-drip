@@ -10,15 +10,13 @@ function Header() {
                 <img src={logo} alt="DataDrip" className="logo"/>
                 <Link to='/' className='logo-link'>DataDrip</Link> 
             </div>
+            <div className='nav-container'>
 
-            <nav>
-                <ul>
-                    <Link to='/' className='link'>About</Link>
+                <Link to='/' className='link'>About</Link>
+                <Link to='/test'className='link'>Take the Test</Link>
+            </div>
 
-                    <Link to='/test'className='link'>Take the Test</Link>
-                </ul>
-            </nav>
-        </header>
+        </header> 
     );
 }
 

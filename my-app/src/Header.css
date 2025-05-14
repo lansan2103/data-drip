@@ -1,9 +1,9 @@
 .header {
   background-color: #e1af7d;
-  padding: 1px, 10px, 0px, 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
 }
 
 .logo-container {
@@ -14,13 +14,21 @@
   align-items: center;
 }
 
+.nav-container {
+  padding: 1px, 1px, 0px, 30px;
+  padding-left: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .logo {
-  width: 120px;   
+  width: 100px;   
   height: auto;   
 }
 
 .logo-link {
-  font-size: 60px;
+  font-size: 50px;
   font-weight: bold;
   text-decoration: none;
   color: #5d3c37;
@@ -36,9 +44,9 @@
 .link {
   text-decoration: none;
   color: #5d3c37;
-  font-weight: bold;
-  font-size: 40px;
-  padding: 50px
+  font-weight: 600;
+  font-size: 35px;
+  padding: 35px
 } 
 
 .link:hover {

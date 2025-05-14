@@ -82,8 +82,9 @@ function App() {
       
       <hr />
 
-      <h2 className="subheader">Please select your gender and upload a clear photo of your face :D</h2>
-
+      <h2 className="introduction">Please select your gender and upload a clear photo of your face :D</h2>
+      <br>
+      </br>
       <div className='gender-button'>
         <button onClick ={() => setGender('mens')} className={gender === 'mens' ? 'selected-button' : 'unselected-button'}>Male</button>
         <button onClick ={() => setGender('womens')} className ={gender === 'womens' ? 'selected-button' : 'unselected-button'}>Female</button>
