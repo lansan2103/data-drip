@@ -27,10 +27,7 @@ function Accept({ setFile }) {
         <input {...getInputProps()} />
         <p>Drag 'n' drop an image here, or click to select</p>
       </div>
-      <aside>
-        <h4 className = 'subheader'>Selected File:</h4>
-        <ul>{fileList}</ul>
-      </aside>
+        <p>Selected File: {fileList}</p>
     </section>
   );
 }
@@ -80,23 +77,20 @@ function App() {
   };
 
   return (
-    <div className="app" style={{ textAlign: 'center', marginTop: '20px' }}>
+    <div className="app" style={{ textAlign: 'center', justifyContent: 'space-around', marginTop: '10px' }}>
       <h1 className="title">DataDrip Test</h1>
       
       <hr />
 
       <h2 className="subheader">Please select your gender and upload a clear photo of your face :D</h2>
 
-      {/* // Change the Class Name when styling */}
-      {/* <div style={{ textAlign: 'center', marginTop: '20px' }}> */}
-      <button onClick ={() => setGender('mens')} className={gender === 'mens' ? 'selected-button' : 'upload-button'}>Male</button>
-      <button onClick ={() => setGender('womens')} className ={gender === 'womens' ? 'selected-button' : 'upload-button'}>Female</button>
-      
-      {/* <button onClick ={() => setGender('womens')} className = "upload-button" style={{marginLeft: '740px'}}>Female</button> */}
+      <div className='gender-button'>
+        <button onClick ={() => setGender('mens')} className={gender === 'mens' ? 'selected-button' : 'unselected-button'}>Male</button>
+        <button onClick ={() => setGender('womens')} className ={gender === 'womens' ? 'selected-button' : 'unselected-button'}>Female</button>
+      </div>
 
       <Accept setFile={setFile} />
       <button onClick={handleUpload} className="upload-button" >Upload</button>
-      {/* </div> */}
 
       {season && (
         <div className="results">
