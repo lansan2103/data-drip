@@ -7,10 +7,13 @@ import cv2
 import numpy as np
 import pandas as pd
 import random
+import requests
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
 CORS(app, origins="*")
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 UPLOAD_FOLDER = './uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -29,15 +32,15 @@ seasonal_palettes_hex = {
         ("Yellow gold", "#FADA5E"), ("Baby pink", "#FFC0CB"), ("Light pink", "#FFB6C1"),
         ("Salmon", "#FA8072"), ("Coral", "#FF7F50"), ("Light blue", "#ADD8E6"),
         ("Sky blue", "#87CEEB"), ("Light green", "#90EE90"), ("Mint", "#98FF98"),
-        ("Peach", "#FFE5B4"), ("Amber", "#FFBF00"), ("Lemon", "#FFF44F")
+        ("Peach", "#FFE5B4"), ("Amber", "#FFBF00"), ("Lemon", "#FFF44F"), ("White", "#000000"),  ("Beige", "#B5AFA0")
     ],
     "Summer": [
         ("Cobalt blue", "#0047AB"), ("Indigo", "#4B0082"), ("Blue gray", "#6699CC"),
         ("Gray white", "#D3D3D3"), ("Ivory", "#FFFFF0"), ("Ecru", "#C2B280"),
         ("Stone", "#837060"), ("Dusty pink", "#DCAE96"), ("Rose", "#FF007F"),
         ("Mauve", "#E0B0FF"), ("Light purple", "#CBC3E3"), ("Lilac", "#C8A2C8"),
-        ("Pastel purple", "#B39EB5"), ("Pastel blue", "#AEC6CF"), ("Pastel green", "#77DD77"),
-        ("Pastel pink", "#FFD1DC"), ("Dusty rose", "#C08081"), ("Light red", "#FF6961")
+        ("Pastel purple", "#B39EB5"), ("Pastel blue", "#AEC6CF"), ("Pastel green", "#77DD77"), ("Dark Brown", "#696969"),
+        ("Pastel pink", "#FFD1DC"), ("Dusty rose", "#C08081"), ("Light red", "#FF6961"), ("White", "#000000"),  ("Beige", "#B5AFA0")
     ],
     "Autumn": [
         ("Charcoal", "#36454F"), ("Mahogany", "#C04000"), ("Rust", "#B7410E"),
@@ -46,7 +49,7 @@ seasonal_palettes_hex = {
         ("Terracotta", "#E2725B"), ("Dark maroon", "#800000"), ("Dark red", "#8B0000"),
         ("Burnt orange", "#CC5500"), ("Copper", "#B87333"), ("Dark green", "#006400"),
         ("Sea green", "#2E8B57"), ("Dark gray", "#A9A9A9"), ("Gray silver", "#C0C0C0"),
-        ("Amber", "#FFBF00"), ("Gold yellow", "#FFD700"), ("Ecru", "#C2B280")
+        ("Amber", "#FFBF00"), ("Gold yellow", "#FFD700"), ("Ecru", "#C2B280"), ("White", "#000000"),  ("Black", "#FFFFFF"),  ("Beige", "#B5AFA0")
     ],
     "Winter": [
         ("Bright blue", "#0096FF"), ("Dark blue", "#00008B"), ("Navy blue", "#000080"),
@@ -212,6 +215,37 @@ def get_outfit(gender, palette, df, hex_to_color):
     "shoes": {"index": int(shoe_idx) if shoe_idx is not None else None, "url": shoe_url}
     }
 
+def get_image_url(urls):
+# Retrieves a product image url, given a product url
+    image_urls = []
+    for u in urls:
+        temp = []
+
+        headers = {
+            # needed. otherwise the default header python-requests/2.X gets blocked
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+        }
+        resp = requests.get(u, headers=headers)
+        soup = BeautifulSoup(resp.text, 'html.parser')
+
+        # find doesnt work, but find_all does (idk why)
+        og_tags = soup.find_all('meta', attrs={'property': 'og:image'})
+        # iterate and only grab tags with content="...", extract the content
+        for tag in og_tags:
+            if tag.has_attr('content'):
+                content_url = tag['content']
+                temp.append(content_url)
+        if not temp:
+            image_urls.append(None)
+        else:
+            image_urls.append(temp[0])
+        
+    return {
+    "top": {"url": image_urls[0]},
+    "bottom": {"url": image_urls[1]},
+    "shoes": {"url": image_urls[2]}
+    }
+
 @app.route('/test', methods=['GET'])
 def test():
     return 'test', 200
@@ -256,7 +290,9 @@ def upload_file():
                     ["Ivory", "#FFFFF0"],
                     ["Stone", "#837060"],
                     ["Dusty pink", "#DCAE96"],
-                    ["Light blue", "#ADD8E6"]
+                    ["Light blue", "#ADD8E6"],
+                    ["White", "#000000"],
+                    ["Black", "#FFFFFF"],
                 ]
             })
 
@@ -264,11 +300,17 @@ def upload_file():
         palette = get_palette(season)
         links = get_outfit(gender, palette, catalog, hex_to_color)
 
-
+        image_links = get_image_url([
+            links['top']['url'],
+            links['bottom']['url'],
+            links['shoes']['url']
+        ])
+        
         return jsonify({
             "season": season,
             "palette": palette,
-            "links": links
+            "links": links,
+            "images": image_links,
         })
 
     except Exception as e:
